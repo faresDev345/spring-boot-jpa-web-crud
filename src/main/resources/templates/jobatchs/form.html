@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0" />
+  <title>BezKoder - Spring Boot Thymeleaf example</title>
+ <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.6.2/css/bootstrap.min.css}" />
+  <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+  <script type="text/javascript" th:src="@{/webjars/jquery/3.6.1/jquery.min.js}"></script>
+  <script type="text/javascript" th:src="@{/webjars/bootstrap/4.6.2/js/bootstrap.min.js}"></script>
+ 
+</head>
+
+<body> 
+	<div layout:fragment="content">
+	        
+	      <br/>
+ <div class="card" style="max-width: 90%; margin: 0 auto">
+  <div class="card-header">
+    
+   <h2 class="text-center">[[${pageTitle}]]</h2>
+  </div>
+  <div class="card-body"> 
+    <p class="card-text">
+		   <form th:action="@{/jobBatchs/save}" method="post" enctype="multipart/form-data" th:object="${jobBatch}"
+    style="max-width: 90%; margin: 0 auto">
+
+    <input type="hidden" th:field="*{id}" />
+	<div class="d-flex flex-wrap mb-4"> 
+		<h1 th:if="${jobBatch.id  == 0  }">[[#{jobBatch.add.headline}]]</h1>
+		<h1 th:if="${jobBatch.id > 0 }">[[#{jobBatch.edit.headline}]]</h1>
+			           
+	              <div>
+	                  <a th:href="@{/jobBatchs}" class="btn btn-secondary">[[#{jobBatch.add.back}]]</a>
+	              </div>
+	          </div>
+	          <div th:replace="~{fragments/forms::globalErrors('jobBatch')}" /> 
+	              <div th:replace="~{fragments/forms::inputRow(object='jobBatch', field='name' ,required=true)}" />
+	              <div th:replace="~{fragments/forms::inputRow(object='jobBatch', field='code',required=true)}" />
+	              <div th:replace="~{fragments/forms::inputRow(object='jobBatch', field='nbrFiles', type= 'number')}" />
+				  <div th:replace="~{fragments/forms::inputRow(object='jobBatch', field='available', type='checkbox')}" />
+				  <div th:replace="~{fragments/forms::inputRow(object='jobBatch', field='description', type='textarea')}" />
+				  <div>
+				             <label for="filePath">File Path:</label>
+				             <input type="text" id="filePath" th:field="*{filePath}" />
+				         </div>
+				         <div>
+				             <label for="parameter1">Parameter 1:</label>
+				             <input type="text" id="parameter1" th:field="*{parameter1}" /> 
+				             </div>
+				             <div>
+				                 <label for="parameter2">Parameter 2:</label>
+				                 <input type="text" id="parameter2" th:field="*{parameter2}" /> 
+				             </div>
+				             <button type="submit">Upload</button>
+				   </div>
+				   <div class="text-center"> 
+				   			 
+				   <table id="parameterTable">
+				              <thead>
+				                  <tr>
+				                      <th>Parameter Key</th>
+				                      <th>Parameter Value</th>
+				                      <th>Action</th> 
+				                  </tr>
+				              </thead>
+				              <tbody>
+				                  <tr>
+				                      <td><input type="text" name="paramKey[]" /></td>
+				                      <td><input type="text" name="paramValue[]" /></td>
+				                      <td><button type="button" class="remove-row">Remove</button></td>
+				                  </tr>
+				              </tbody>
+				          </table>
+
+				          <button type="button" id="add-row">Add Row</button>
+				          <button type="submit">Upload</button>
+
+				          <script>
+				              $(document).ready(function() {
+				                  $("#add-row").click(function() {
+				                      var newRow = "<tr>" + 
+				                          "<td><input type='text' name='paramKey[]' /></td>" +
+				                          "<td><input type='text' name='paramValue[]' /></td>" +
+				                          "<td><button type='button' class='remove-row'>Remove</button></td>" +
+				                          "</tr>";
+				                      $("#parameterTable tbody").append(newRow);
+				                  });
+
+				                  $(document).on("click", ".remove-row", function() {
+				                      $(this).closest("tr").remove(); 
+				                  });
+				              });
+				          </script>						
+					    </div>
+						  			   
+				 <div class="text-center"> 
+						  			
+				 	 				   		
+					<input  type="submit" th:value="#{jobBatch.save.btn}" class="btn btn-primary btn-sm mr-2" />  
+				      <input type="reset" value="Cancel" id="btnCancel" class="btn btn-secondary btn-sm" />
+				  </div> 
+   
+  </form>
+	</p>
+	</div>
+    <a th:href="@{/jobBatchs}" class="btn btn-primary">Go Back</a>
+    <script type="text/javascript">
+  $(document).ready(function () {
+    $("#btnCancel").on("click", function () {
+      window.location = "[[@{/jobBatchs}]]";
+    });
+  });
+</script>
+ 
+  </div>
+</div>
+
+ </div>
+ 
+</body>
+
+</html>

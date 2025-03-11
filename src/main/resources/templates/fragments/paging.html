@@ -1,0 +1,3 @@
+<a th:fragment="paging(pageNum, label, tooltip)" class="page-link"   th:href="@{  ${moduleName}(page=${pageNum},keyword=${keyword},sortField=${sortField} ,sortDir= ${sortDir})}"> 
+  [[${label}]] 
+</a> 

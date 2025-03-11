@@ -1,0 +1,27 @@
+<header th:fragment="header">
+  <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+    <a class="navbar-brand" th:href="@{/index}">
+      SIDEB Batch
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#topNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="topNavbar">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/jobBatchs}">Liste Batchs</a>
+        </li>
+       
+		  <li class="nav-item"><a class="nav-link"  th:href="@{/jobBatchExecutes}"  >[[#{jobBatchExecute.list.headline}]]</a></li>
+		  <li class="nav-item"><a class="nav-link"  th:href="@{/jobInstances}"  >[[#{jobInstance.list.headline}]]</a></li>
+		  <li class="nav-item"><a class="nav-link"  th:href="@{/jobExecutions}"  >[[#{jobExecution.list.headline}]]</a></li>
+		  <li class="nav-item"><a class="nav-link"  th:href="@{/jobExecutionParamss}"  >[[#{jobExecutionParams.list.headline}]]</a></li>
+		  <li class="nav-item"><a class="nav-link"  th:href="@{/stepExecutions}"  >[[#{stepExecution.list.headline}]]</a></li>
+		  <li class="nav-item"><a class="nav-link"  th:href="@{/traceBatches}"  >[[#{traceBatch.list.headline}]]</a></li>
+		  <li class="nav-item"><a class="nav-link"  th:href="@{/traceJobBatches}"  >[[#{traceJobBatch.list.headline}]]</a></li>
+		  <li class="nav-item"><a class="nav-link"  th:href="@{/stepExecutionContexts}"  >[[#{stepExecutionContext.list.headline}]]</a></li>
+		  <li class="nav-item"><a class="nav-link"  th:href="@{/jobExecutionContexts}"  >[[#{jobExecutionContext.list.headline}]]</a></li>
+      </ul>
+    </div>
+  </nav>
+</header>

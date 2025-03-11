@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Job Instances</title>
+	<style>
+	       .card {
+	           border: 1px solid #ccc;
+	           padding: 10px;
+	           margin-bottom: 10px;
+	           border-radius: 5px;
+	           box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Ombre légère */
+	       }
+
+	       .card-title {
+	           font-size: 1.2em;
+	           margin-bottom: 5px;
+	       }
+
+	       .card-status {
+	           font-style: italic;
+	           color: #777;
+	       }
+	   </style>
+</head>
+<body>
+    <h1>Job Instances</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Job Name</th>
+                <th>Instance ID</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="job : ${jobs}">
+                <td th:text="${job.code}"></td>
+                <td th:text="${job.name}"></td>
+                <td th:text="${job.status}"></td>
+                <td>
+                    <a th:href="@{/batch/status/{code}(code=${job.code})}">View Status</a>
+                    <form th:action="@{/batch/launch}" method="post">
+                        <button type="submit">Launch Job</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+	
+	
+	<h1>Tableau de bord des batchs</h1>
+	    <div id="jobs-container">
+			<div th:each="jobInfo : ${jobs}" class="card">
+			       <div class="card-title" th:text="${jobInfo.name}"></div>
+			       <div class="card-status" th:text="${jobInfo.status}"></div>
+				   <button type="button" th:onclick="'javascript:launchJob(\'' + ${jobInfo.name} + '\')'">Lancer</button>
+
+			       </div>
+				   <script>
+				          function launchJob(jobName) {
+				              fetch('/jobs/' + jobName + '/launch', {
+				                  method: 'POST' // Ou GET si vous préférez
+				              })
+				              .then(response => {
+				                  if (response.ok) {
+				                      alert('Job ' + jobName + ' lancé !');
+				                      // Optionnel: Mettre à jour le statut du job sur la page
+				                  } else {
+				                      alert('Erreur lors du lancement du job ' + jobName);
+				                  }
+				              });
+				          }
+				      </script>
+	        </div>
+	    
+</body>
+</html>

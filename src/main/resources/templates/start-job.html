@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Gestion des Batchs</title>
+</head>
+<body>
+    <h1>Exécution de Batchs</h1>
+    
+    <form method="POST" action="/launchJob" enctype="multipart/form-data">
+        <div>
+            <label>Batch à exécuter :</label>
+            <select name="jobName">
+                <option th:each="job : ${jobs}" th:value="${job}" th:text="${job}"></option>
+            </select>
+        </div>
+        
+        <div>
+            <label>Fichiers à traiter :</label>
+            <input type="file" name="files" multiple required>
+        </div>
+        
+        <button type="submit">Démarrer le traitement</button>
+    </form>
+    
+    <h2>Historique des exécutions</h2>
+    <table>
+        <tr>
+            <th>Job</th>
+            <th>Date début</th>
+            <th>Date fin</th>
+            <th>Statut</th>
+            <th>Fichiers</th>
+        </tr>
+        <tr th:each="exec : ${executions}">
+            <td th:text="${exec.jobName}"></td>
+            <td th:text="${exec.startTime}"></td>
+            <td th:text="${exec.endTime}"></td>
+            <td th:text="${exec.status}"></td>
+            <td>
+                <ul>
+                    <li th:each="file : ${exec.files}" th:text="${file.fileName}"></li>
+                </ul>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout}">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0" />
+	<title>[[#{title.show.label}]] </title>
+	 
+</head>
+
+<body>
+
+	<div layout:fragment="content">
+
+		<div class="card" style="max-width: 90%; margin: 0 auto">
+			<div class="card-header">
+
+				<h2 class="text-center"> [[#{jobBatch.show.headline}]]</h2>
+			</div>
+			<div class="card-body">
+				<h5 class="card-title"></h5>
+				<p class="card-text">
+				<form th:action="@{/jobBatchs}" method="post" enctype="multipart/form-data" th:object="${jobBatch}"
+					style="max-width: 550px; margin: 0 auto">
+
+					<input type="hidden" th:field="*{id}" />
+
+					<div class="p-3">
+						<div class="form-group row">  
+							<label class="col-sm-3 col-form-label" for="name">[[#{jobBatch.name.label}]]</label>
+							<div class="col-sm-9">
+								[[*{name}]]
+							</div>
+						</div>
+					</div>
+					<div class="p-3">
+						<div class="form-group row">
+							<label class="col-sm-3 col-form-label" for="code">[[#{jobBatch.code.label}]]</label>
+							<div class="col-sm-9">
+								[[*{code}]]
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-3 col-form-label" for="prix">[[#{jobBatch.nbrFiles.label}]]</label>
+							<div class="col-sm-9"> [[*{nbrFiles}]]
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-3 col-form-label" for="available">[[#{jobBatch.available.label}]]</label>
+
+							<div class="col-sm-9">
+								<input type="checkbox" th:field="*{available}" id="available" disabled />
+							</div>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-3 col-form-label" for="nbrAvailable">[[#{jobBatch.nbrAvailable.label}]]</label>
+						<div class="col-sm-9">[[*{nbrAvailable}]]
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-3 col-form-label" for="description">[[#{jobBatch.description.label}]]</label>
+						<div class="col-sm-9">[[*{description}]]
+						</div>
+					</div>
+
+					<div class="text-center">
+
+						<a th:href="@{'/jobBatchs?' + ${keyword!=null && keyword!=''? 'keyword=' + keyword + '&' : ''} + 'page=' + ${currentPage} + '&size=' + ${pageSize} }"
+							title="show details of this jobBatch" class="fa-regular fa-eye  icon-dark">Back</a>
+					</div>
+				 </p>
+			</div>
+			</form>
+			
+			<a th:href="@{/jobBatchs}" class="btn btn-primary">Go Back</a>
+			<script type="text/javascript">
+				$(document).ready(function () {
+					$("#btnCancel").on("click", function () {
+						window.location = "[[@{/jobBatchs}]]";
+					});
+				});
+			</script>
+		</div>
+	</div>
+
+	</div>
+
+</body>
+
+</html>

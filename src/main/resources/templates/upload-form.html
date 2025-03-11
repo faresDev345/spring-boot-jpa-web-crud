@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Lancer un Batch</title>
+</head>
+<body>
+    <h1>Lancer un traitement batch</h1>
+    
+    <form method="POST" action="/launchImport" enctype="multipart/form-data">
+        <div>
+            <label>Sélectionner le fichier CSV :</label>
+            <input type="file" name="file" accept=".csv" required>
+        </div>
+        <button type="submit">Lancer le batch</button>
+    </form>
+    
+    <div th:if="${param.success}">
+        Batch exécuté avec succès !
+    </div>
+</body>
+</html>

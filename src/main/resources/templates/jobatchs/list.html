@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+	  <head>
+	         <title>[[#{jobatchs.list.headline}]]</title>
+	     </head>
+
+<body> 
+	<div layout:fragment="content"> 
+  <div th:if="${message != null}" class="alert alert-success alert-dismissible fade show text-center message"
+  role="alert">
+  [[${message}]]
+  <button type="button" class="close btn-sm" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">×</span>
+  </button>
+</div>
+
+<h1>Batch List</h1>
+   <table>
+       <thead>
+           <tr>
+			   <th>Code</th>
+               <th>Name</th>
+               <th>Status</th>
+               <th>Action</th>
+           </tr>
+       </thead>
+       <tbody>
+           <tr th:each="batch : ${list}">
+               <td th:text="${batch.code}"></td>
+			   <td th:text="${batch.name}"></td>
+               <td th:text="${batch.available}"></td>
+               <td>
+                   <button th:if="${batch.available}" 
+                           th:onclick="'javascript:startBatch(\'' + ${batch.id} + '\');'">Start</button>
+               </td>
+           </tr>
+       </tbody>
+   </table>
+
+
+<div class="d-flex flex-wrap mb-4">
+               <h1 class="flex-grow-1">[[#{jobBatch.list.headline}]]</h1>
+               <div>
+                   <a th:href="@{/jobBatchs/add}" class="btn btn-primary ms-2">[[#{jobBatch.list.createNew}]]</a>
+               </div>
+           </div>
+ <div th:if="${list.empty}">[[#{jobBatch.list.empty}]]</div>
+		
+   <h5 class="card-title" style="max-width: 90%; margin: 0 auto"> 
+		
+<div th:insert="~{fragments/search :: search(requestUri = '/jobBatchs',field='keyword', label='Nom Job')}">search</div>
+	</h5> 	
+<div class="card" style="max-width: 90%; margin: 0 auto">
+	
+<div th:if="${list.size() > 0}">
+  <table class="table table-hover table-responsive-xl">
+    <thead class="thead-light">
+		<tr>
+	  <th scope="col">[[#{jobBatch.id.label}]]</th>
+	  <th scope="col">[[#{jobBatch.code.label}]]</th>
+	  <th scope="col">[[#{jobBatch.name.label}]]</th>
+	  <th scope="col">[[#{jobBatch.available.label}]]</th>
+	  <th scope="col">[[#{jobBatch.nbrFiles.label}]]</th>
+	  <th scope="col">[[#{jobBatch.nbrAvailable.label}]]</th>
+	  <th scope="col">[[#{jobBatch.description.label}]]</th>
+	  <th><!-- --></th>
+	  </tr>
+    </thead>
+    <tbody>
+      <tr th:each="jobBatch : ${list}">
+        <td scope="row">
+			
+          <a th:href="@{'/jobBatchs/show?id=' + ${jobBatch.id} + '&' + ${keyword!=null && keyword!=''? 'keyword=' + keyword + '&' : ''} + 'page=' + ${currentPage} + '&size=' + ${pageSize} }" title="show details of this jobBatch"
+            class="fa-regular fa-eye  icon-dark"> [[${jobBatch.id}]] </a></td>
+        <td>[[${jobBatch.code}]]</td> 
+		<td>[[${jobBatch.name}]]</td> 
+		<td>[[${jobBatch.available}]]</td> 
+		<td>[[${jobBatch.nbrFiles}]]</td> 
+        <td>[[${jobBatch.nbrAvailable}]]</td>
+		<td>[[${jobBatch.description}]]</td>
+        <td>
+          <a th:if="${jobBatch.available == true}" class="fa-regular fa-square-check"
+            th:href="@{'/jobBatchs/' + ${jobBatch.id} + '/available/false'}" title="Disable this jobBatch"></a>
+          <a th:if="${jobBatch.available == false}" class="fa-regular fa-square icon-dark"
+            th:href="@{'/jobBatchs/' + ${jobBatch.id} + '/available/true'}" title="Enable this jobBatch"></a>
+        </td>
+        <td>
+			
+          <a th:href="@{'/jobBatchs/show?id=' + ${jobBatch.id} + '&' + ${keyword!=null && keyword!=''? 'keyword=' + keyword + '&' : ''} + 'page=' + ${currentPage} + '&size=' + ${pageSize} }" title="show details of this jobBatch"
+            class="fa-regular fa-eye  icon-dark">Detail</a>
+            - 
+          <a th:href="@{'/jobBatchs/edit/' + ${jobBatch.id}}" title="Edit this jobBatch"
+            class="fa-regular fa-pen-to-square icon-dark"> Edit</a>
+            
+			<form th:action="@{/jobBatchs/delete/{id}(id=${jobBatch.id})}"
+			                                            th:data-confirm-message="#{delete.confirm}" method="post" class="js-submit-confirm d-inline">
+			                                        <button type="submit" class="btn btn-sm btn-secondary">[[#{jobBatch.list.delete}]]</button>
+			                                    </form>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="" th:unless="${list.size() > 0}">
+  <span>No jobBatchs found!</span>
+</div>
+<div th:insert="~{fragments/pagination :: pagination(currentPage = ${currentPage},totalPages=${totalPages})}">Pagination</div>
+	
+<div class="modal fade text-center" id="confirmModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Delete Confirmation</h5>
+        <button type="button" class="close" data-dismiss="modal">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <span id="confirmText"></span>
+      </div>
+
+      <div class="modal-footer">
+        <a type="button" id="yesBtn" class="btn btn-danger">Yes</a>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    $(".btn-delete").on("click", function (e) {
+      e.preventDefault();
+      link = $(this);
+
+      jobBatchName = link.attr("jobBatchName");
+      $("#yesBtn").attr("href", link.attr("href"));
+      $("#confirmText").html("Do you want to delete the JobBatch \<strong\>" + jobBatchName + "\<\/strong\>?");
+      $("#confirmModal").modal();
+    });
+    
+
+  });
+</script>
+</div> 
+ 
+</div> 
+</body>
+
+</html>

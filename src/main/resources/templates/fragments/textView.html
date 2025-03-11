@@ -1,0 +1,7 @@
+<div class="d-flex flex-wrap mb-4" th:fragment="viewField (object, field)" th:object="${__${object}__}">
+
+	<h4 class="flex-grow-1"> <span th:text="#{__${object}__.__${field}__.label}" /> </h4>
+	<div th:id="${field}" th:text="*{__${field}__}" class="col-md-8">
+
+	</div>
+</div>

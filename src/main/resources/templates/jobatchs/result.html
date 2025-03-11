@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Job Results</title>
+</head>
+<body>
+    <h1>Job Results</h1>
+
+    <p>Status: <span th:text="${formData.status}"></span></p>
+
+    <p>Result Message: <span th:text="${formData.resultMessage}"></span></p>
+
+    <div th:if="${formData.status == 'SUCCESS'}">
+        <h2>Detailed Results</h2>
+        <ul>
+            <li>Number of records processed: <span th:text="${formData.recordsProcessed}"></span></li> 
+            <li>...</li> 
+        </ul>
+    </div>
+
+    <div th:if="${formData.status == 'FAILED'}">
+        <h2>Error Details</h2> 
+        <p>Error Message: <span th:text="${formData.errorMessage}"></span></p> 
+    </div>
+</body>
+</html>

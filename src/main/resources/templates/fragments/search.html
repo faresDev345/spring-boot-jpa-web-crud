@@ -1,0 +1,45 @@
+<div class="d-flex flex-wrap mb-4"    th:fragment="search (requestUri,field, label)">
+					 	           
+				<form th:action="${requestUri}" method="get" id="searchForm">
+				  <div class="d-flex flex-wrap mb-4">
+				        <div class="search">
+				          <i class="fa fa-search"></i>
+				          <input th:id="${field}"  type="search" name="${field}" th:field="*{__${field}__}" required class="form-control"
+				            th:placeholder="${label}" />
+				        </div>
+
+						<div > <button type="submit" class="btn btn-secondary">Search</button>  </div>
+				        <div class="input-group-prepend">
+				          <label class="input-group-text" for="pageSize">Items per page:</label>
+				        </div>
+				        <select form="searchForm" name="size" th:value="${pageSize}" onchange="changePageSize()" class="size-select"
+				          id="pageSize">
+				          <option th:each="s : ${ {3, 6, 9} }" th:value="${s}" th:text="${s}" th:selected="${s == pageSize}"></option>
+				        </select>
+				      <div >
+				        <button id="btnClear" class="btn btn-info">Clear</button>
+				      </div>
+				    </div>
+				  </form>
+				</div>
+				<!-- sortable Table and Pagination Bar -->
+
+						<script type="text/javascript">
+						  $(document).ready(function () {
+						    // ...
+							
+						    $("#btnClear").on("click", function (e) {
+								alert('ccccc');
+						      e.preventDefault();
+						      $("#keyword").text("");
+							  $("#keyword").val("");
+							  document.getElementById("keyword").value = "";
+						      window.location = "[[@{/requestUri?keyword=}]]";
+						    });
+						  });
+
+						  function changePageSize() {
+							
+						    $("#searchForm").submit();
+						  }
+						</script>

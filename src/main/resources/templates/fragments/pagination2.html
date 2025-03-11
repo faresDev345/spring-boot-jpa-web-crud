@@ -1,0 +1,33 @@
+<div  class="d-flex flex-wrap mb-4"   th:fragment="paginer(pageCurrent,pageTotal)" >
+
+
+	<nav aria-label="Pagination" th:if="${pageTotal > 0}">
+	  <ul class="pagination justify-content-center">
+	    <li class="page-item" th:classappend="${pageCurrent == 1} ? 'disabled'">
+	      <a th:replace="~{fragments/paging :: paging(1, '<<', 'First Page')}"></a>
+	    </li>
+	    <li class="page-item font-weight-bold" th:classappend="${pageCurrent == 1} ? 'disabled'">
+	      <a th:replace="~{fragments/paging :: paging(${pageCurrent - 1}, 'Prev', 'Previous Page')}"></a>
+	    </li>
+	    <li class="page-item disabled" th:if="${pageCurrent - 2 > 1}">
+	      <a class="page-link" href="#">...</a>
+	    </li>
+	    <li class="page-item" th:classappend="${page == pageCurrent} ? 'active'"
+	      th:each="page : ${#numbers.sequence(pageCurrent > 2 ? pageCurrent - 2 : 1, pageCurrent + 2 < pageTotal ? pageCurrent + 2 : pageTotal)}">
+	      <a th:replace="~{fragments/paging :: paging(${page}, ${page}, 'Page ' + ${page})}"></a>
+	    </li>
+	    <li class="page-item disabled" th:if="${pageCurrent + 2 < pageTotal}">
+	      <a class="page-link" href="#">...</a>
+	    </li>
+	    <li class="page-item font-weight-bold" th:classappend="${pageCurrent == pageTotal} ? 'disabled'">
+	      <a th:replace="~{fragments/paging :: paging(${pageCurrent + 1},'Next', 'Next Page')}"></a>
+	    </li>
+	    <li class="page-item" th:classappend="${pageCurrent == pageTotal} ? 'disabled'">
+	      <a th:replace="~{fragments/paging :: paging(${pageTotal}, '>>', 'Last Page')}"></a>
+	    </li>
+	  </ul>
+	</nav>
+ </div>
+
+					
+
