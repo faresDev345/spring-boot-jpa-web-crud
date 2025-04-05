@@ -34,15 +34,15 @@ import lombok.extern.log4j.Log4j2;
 @Configuration
 @EnableBatchProcessing 
 @Log4j2
-public class BatchConfig {
+public class BatchConfigArticle {
 	
 	 // JdbcTemplates
-    @Bean
+    //@Bean
     public JdbcTemplate sourceJdbcTemplate(@Qualifier("sourceDataSource") DataSource dataSource) {
         return new JdbcTemplate(dataSource);
     }
 
-    @Bean
+   // @Bean
     public JdbcTemplate destinationJdbcTemplate(@Qualifier("destinationDataSource") DataSource dataSource) {
         return new JdbcTemplate(dataSource);
     }

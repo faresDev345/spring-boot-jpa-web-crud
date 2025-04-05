@@ -9,8 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 @Entity
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
+@AllArgsConstructor 
 public class Article {
 	@Id
 	//@GeneratedValue(strategy = GenerationType.IDENTITY)

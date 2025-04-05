@@ -1,4 +1,4 @@
-package com.app.theme.batch;
+package com.app.batch.config;
 import javax.sql.DataSource;
 
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;

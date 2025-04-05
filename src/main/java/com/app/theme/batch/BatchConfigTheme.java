@@ -38,7 +38,7 @@ import lombok.extern.log4j.Log4j2;
 @Configuration
 @EnableBatchProcessing 
 @Log4j2
-public class BatchConfig {
+public class BatchConfigTheme {
 	
 	 // JdbcTemplates
     @Bean

@@ -197,7 +197,6 @@ public class JobBatch {
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 class Parameter {
 	public Parameter(String key2, String value2) {
 		key=key2;
